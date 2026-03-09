@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<resources> 
+<color name="black">#FF000000</color> 
+<color name="white">#FFFFFFFF</color> 
+<color name="myColor1">#D62069</color> 
+<color name="myColor2">#61C821</color> 
+<color name="myColor3">#FFEA2B</color> 
+</resources> 
+strings.xml 
+<resources> 
+<string name="app_name">Practical7</string> 
+<string name="myFirstName">Hrithik</string> 
+<string name="myLastName">Vishwakarma</string> 
+</resources> 
+themes.xml 
+<resources xmlns:tools="http://schemas.android.com/tools"> 
+<style name="Base.Theme.Practical7" 
+parent="Theme.Material3.DayNight.NoActionBar"> 
+<item name="colorPrimary">@color/myColor1</item> 
+<item name="android:statusBarColor">@color/myColor1</item> 
+</style> 
+<style name="Theme.Practical7" parent="Base.Theme.Practical7" /> 
+</resources> 
+drawable resource directory 
+activity_main.xml 
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+   xmlns:tools="http://schemas.android.com/tools" 
+   android:id="@+id/main" 
+   android:layout_width="match_parent" 
+   android:layout_height="match_parent" 
+   android:orientation="vertical" 
+   android:padding="20dp" 
+   android:background="@color/myColor3" 
+   tools:context=".MainActivity"> 
+ 
+   <TextView 
+       android:layout_width="wrap_content" 
+       android:layout_height="wrap_content" 
+       android:textSize="30sp" 
+       android:textStyle="bold" 
+       android:text="@string/myFirstName"/> 
+ 
+   <TextView 
+       android:layout_width="wrap_content" 
+       android:layout_height="wrap_content" 
+       android:textSize="20sp" 
+       android:textStyle="bold" 
+       android:layout_marginBottom="20dp" 
+       android:text="@string/myLastName"/> 
+ 
+   <Button 
+       android:layout_width="match_parent" 
+       android:layout_height="wrap_content" 
+       android:text="Default Color Button" 
+       android:textSize="20sp" 
+       android:textStyle="bold" 
+       android:layout_marginBottom="20dp" 
+       android:padding="15dp"/> 
+ 
+   <Button 
+       android:layout_width="match_parent" 
+       android:layout_height="wrap_content" 
+       android:text="Custom Color Button" 
+       android:textSize="20sp" 
+       android:textStyle="bold" 
+       android:layout_marginBottom="20dp" 
+       android:backgroundTint="@color/myColor2" 
+       android:padding="15dp"/> 
+ 
+   <ImageView 
+       android:layout_width="match_parent" 
+       android:layout_height="wrap_content" 
+android:src="@drawable/dummy_image"/> 
+</LinearLayout>
+activity_main.xml 
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+   xmlns:app="http://schemas.android.com/apk/res-auto" 
+   xmlns:tools="http://schemas.android.com/tools" 
+   android:layout_width="match_parent" 
+   android:layout_height="match_parent" 
+   android:paddingHorizontal="10dp" 
+   android:paddingTop="10dp" 
+   android:orientation="vertical" 
+   tools:context=".MainActivity"> 
+ 
+   <TextView 
+       android:id="@+id/selectedGame" 
+       android:layout_width="match_parent" 
+       android:layout_height="wrap_content" 
+       android:layout_marginBottom="5dp" 
+       android:textSize="20sp" 
+       android:textStyle="bold" 
+       android:gravity="center" 
+       android:padding="20dp" 
+       android:text="Selected Game"/> 
+ 
+   <ListView 
+       android:id="@+id/gamesList" 
+       android:layout_width="match_parent" 
+       android:layout_height="wrap_content" 
+       android:divider="@color/white" 
+       android:background="@color/listColor" 
+       android:dividerHeight="5dp"/> 
+ 
+</LinearLayout> 
+ 
+MainActivity.kt 
+class MainActivity : AppCompatActivity() { 
+ 
+   lateinit var gamesList: ListView 
+   lateinit var selectedGame: TextView 
+ 
+   override fun onCreate(savedInstanceState: Bundle?) { 
+       super.onCreate(savedInstanceState) 
+       setContentView(R.layout.activity_main) 
+ 
+gamesList = findViewById(R.id.gamesList) 
+selectedGame = findViewById(R.id.selectedGame) 
+val games: Array<String> = arrayOf("PUBG", "Fortnite", "Valorant", "BGMI", 
+"GTA V1", "Red Dead Redemption", "Minecraft", "CS GO", "GTA Vice City", "Asphalt 
+8") 
+gamesList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, 
+games) 
+} 
+} 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+android:padding="20dp"
+tools:context=".MainActivity">
+<EditText
+android:id="@+id/dataET"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginBottom="20dp"
+android:textSize="30sp"
+android:hint="Enter Your Data" />
+<Button
+android:id="@+id/button"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="30sp"
+android:text="Send Data"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent" />
+</LinearLayout>
+MainActivity.kt
+class MainActivity : AppCompatActivity() {
+lateinit var button: Button
+lateinit var dataEt: EditText
+override fun onCreate(savedInstanceState: Bundle?) {
+super.onCreate(savedInstanceState)
+setContentView(R.layout.activity_main)
+button = findViewById(R.id.button)
+dataEt = findViewById(R.id.dataET)
+button.setOnClickListener {
+val intent = Intent()
+intent.setAction(Intent.ACTION_SEND)
+intent.putExtra(Intent.EXTRA_TEXT, dataEt.text.toString())
+intent.setType("text/plain")
+if(intent.resolveActivity(packageManager) != null) {
+startActivity(intent)
+}}}
+AndroidManifest.xml
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:id="@+id/main"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:gravity="center"
+ android:padding="20dp"
+ tools:context=".MainActivity">
+ <TextView
+ android:id="@+id/infoText"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:textAlignment="center"
+ android:textStyle="bold"
+ android:textSize="30sp"
+ android:text="Hello World!" />
+</LinearLayout>
+MainActivity.kt
+class MainActivity : AppCompatActivity() {
+ lateinit var infoText: TextView
+ override fun onCreate(savedInstanceState: Bundle?) {
+ super.onCreate(savedInstanceState)
+ setContentView(R.layout.activity_main)
+ infoText = findViewById(R.id.infoText)
+ val manager: ConnectivityManager =
+getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+ val networkInfo: NetworkInfo? = manager.activeNetworkInfo
+ if(networkInfo!=null && networkInfo.isConnected){
+ if(networkInfo.type == ConnectivityManager.TYPE_MOBILE) {
+ infoText.text = "Connected to Cellular"
+ }
+ if(networkInfo.type == ConnectivityManager.TYPE_WIFI){
+ infoText.text = "Connected to WiFi"
+ }
+ } else {
+ infoText.text = "You are Offline"
+}}
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical"
+ android:gravity="center"
+ android:padding="20dp"
+ tools:context=".MainActivity">
+ <Button
+ android:id="@+id/playBtn"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="Play Media" />
+ <Button
+ android:id="@+id/pauseBtn"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:text="Pause Media" />
+</LinearLayout>
+MainActivity.kt
+class MainActivity : AppCompatActivity() {
+ var mediaPlayer = MediaPlayer()
+ override fun onCreate(savedInstanceState: Bundle?) {
+ super.onCreate(savedInstanceState)
+ setContentView(R.layout.activity_main)
+ val playBtn = findViewById<Button>(R.id.playBtn)
+ val pauseBtn = findViewById<Button>(R.id.pauseBtn)
+ playBtn.setOnClickListener {
+ mediaPlayer.setDataSource(this, Uri.parse("android.resource://" +
+this.packageName + "/" + R.raw.payphone))
+ mediaPlayer.prepare()
+ mediaPlayer.start()
+ }
+ pauseBtn.setOnClickListener {
+ mediaPlayer.stop()
+ mediaPlayer.release()
+ mediaPlayer = MediaPlayer()}}
+?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+ xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <TextView
+ android:layout_width="157dp"
+ android:layout_height="66dp"
+ android:text="Activity 1"
+ app:autoSizeTextType="uniform"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintLeft_toLeftOf="parent"
+ app:layout_constraintRight_toRightOf="parent"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintVertical_bias="0.21" />
+ <Button
+ android:id="@+id/bmove"
+ android:layout_width="124dp"
+ android:layout_height="73dp"
+ android:text="move"
+ android:background="#FFBB86FC"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ app:layout_constraintHorizontal_bias="0.526"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintVertical_bias="0.531" />
+</android.support.constraint.ConstraintLayout>
+MainActivity.KT
+package com.example.explicit_intent
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+class MainActivity : AppCompatActivity() {
+ override fun onCreate(savedInstanceState: Bundle?) {
+ super.onCreate(savedInstanceState)
+ setContentView(R.layout.activity_main)
+ val secondbutton = findViewById<Button>(R.id.bmove)
+ secondbutton.setOnClickListener{
+ intent = Intent(this,second_activity::class.java)
+ startActivity(intent)
+ }
+ }
+}
+Activity_second.xml 
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+ xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".second_activity">
+ <TextView
+ android:id="@+id/textView"
+ android:layout_width="181dp"
+ android:layout_height="85dp"
+ android:text="Activity 2"
+ app:autoSizeTextType="uniform"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintVertical_bias="0.189" />
+ <Button
+ android:id="@+id/bback"
+ android:layout_width="170dp"
+ android:layout_height="74dp"
+ android:text="Back"
+ android:background="#FFBB86FC"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintEnd_toEndOf="parent"
+ app:layout_constraintHorizontal_bias="0.477"
+ app:layout_constraintStart_toStartOf="parent"
+ app:layout_constraintTop_toTopOf="parent"
+ app:layout_constraintVertical_bias="0.643" />
+</android.support.constraint.ConstraintLayout>
+Second_Activity.KT
+package com.example.explicit_intent
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+class second_activity : AppCompatActivity() {
+ override fun onCreate(savedInstanceState: Bundle?) {
+ super.onCreate(savedInstanceState)
+ setContentView(R.layout.activity_second)
+ val secondbutton = findViewById<Button>(R.id.bback)
+ secondbutton.setOnClickListener{
+ intent = Intent(this,MainActivity::class.java)
+ startActivity(intent) }}}
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+ xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:text="Hello World!"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintLeft_toLeftOf="parent"
+ app:layout_constraintRight_toRightOf="parent"
+ app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
+Omenu.Xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/item1"
+ android:title="India">
+</item>
+ <item android:id="@+id/item2"
+ android:title="China">
+ </item>
+ <item android:id="@+id/item3"
+ android:title="Nepal">
+ </item>
+ <item android:id="@+id/item4"
+ android:title="Russia">
+ </item>
+ <item android:id="@+id/item5"
+ android:title="America">
+ </item>
+</menu> 
+</menu>
+MainActivity.KT
+package com.example.menuitems
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+class MainActivity : AppCompatActivity() {
+ override fun onCreate(savedInstanceState: Bundle?) {
+ super.onCreate(savedInstanceState)
+ setContentView(R.layout.activity_main)
+ }
+ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+ menuInflater.inflate(R.menu.omenu,menu)
+ return super.onCreateOptionsMenu(menu)
+ }
+ override fun onOptionsItemSelected(item: MenuItem): Boolean {
+ return when(item.itemId) {
+ R.id.item1 -> {
+ Toast.makeText(this, "India Selected", Toast.LENGTH_LONG).show()
+ true
+ }
+ R.id.item2 -> {
+ Toast.makeText(this, "China Selected", Toast.LENGTH_LONG).show()
+ true
+ }
+ R.id.item3 -> {
+ Toast.makeText(this, "Nepal Selected", Toast.LENGTH_LONG).show()
+ true
+ }
+ R.id.item4 -> {
+ Toast.makeText(this, "Russia Selected", Toast.LENGTH_LONG).show()
+ true
+ }
+ R.id.item5 -> {
+ Toast.makeText(this, "America Selected", Toast.LENGTH_LONG).show()
+ true
+ }
+ else -> super.onOptionsItemSelected(item)
+ } 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Email -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        app:counterEnabled="true"
+        app:counterMaxLength="16">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- Phone -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+</LinearLayout>
+package com.example.myapplication
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Patterns
+import android.widget.Button
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var emailEditText: TextInputEditText
+    lateinit var passwordEditText: TextInputEditText
+    lateinit var phoneEditText: TextInputEditText
+
+    lateinit var emailContainer: TextInputLayout
+    lateinit var passwordContainer: TextInputLayout
+    lateinit var phoneContainer: TextInputLayout
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        emailEditText = findViewById(R.id.emailEditText)
+        passwordEditText = findViewById(R.id.passwordEditText)
+        phoneEditText = findViewById(R.id.phoneEditText)
+
+        emailContainer = findViewById(R.id.emailContainer)
+        passwordContainer = findViewById(R.id.passwordContainer)
+        phoneContainer = findViewById(R.id.phoneContainer)
+
+        val submitButton: Button = findViewById(R.id.submitButton)
+
+        submitButton.setOnClickListener {
+            submitForm()
+        }
+    }
+
+    private fun submitForm() {
+        if (!validateEmail() or !validatePassword() or !validatePhone()) {
+            return
+        }
+    }
+
+    private fun validateEmail(): Boolean {
+        val email = emailEditText.text.toString()
+
+        if (email.isEmpty()) {
+            emailContainer.error = "Email required"
+            return false
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailContainer.error = "Invalid Email"
+            return false
+        }
+
+        emailContainer.error = null
+        return true
+    }
+
+    private fun validatePassword(): Boolean {
+        val password = passwordEditText.text.toString()
+
+        if (password.length < 6) {
+            passwordContainer.error = "Password must be 6 characters"
+            return false
+        }
+
+        passwordContainer.error = null
+        return true
+    }
+
+    private fun validatePhone(): Boolean {
+        val phone = phoneEditText.text.toString()
+
+        if (phone.length != 10) {
+            phoneContainer.error = "Invalid Phone Number"
+            return false
+        }
+
+        phoneContainer.error = null
+        return true
+    }
+}
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/num1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter First Number"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/num2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Second Number"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/addBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"/>
+
+    <Button
+        android:id="@+id/subBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subtract"/>
+
+    <Button
+        android:id="@+id/mulBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Multiply"/>
+
+    <Button
+        android:id="@+id/divBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Divide"/>
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Result"
+        android:textSize="24sp"/>
+</LinearLayout>
+package com.example.calculatorapp
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var num1: EditText
+    lateinit var num2: EditText
+    lateinit var result: TextView
+
+    lateinit var addBtn: Button
+    lateinit var subBtn: Button
+    lateinit var mulBtn: Button
+    lateinit var divBtn: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        num1 = findViewById(R.id.num1)
+        num2 = findViewById(R.id.num2)
+        result = findViewById(R.id.result)
+
+        addBtn = findViewById(R.id.addBtn)
+        subBtn = findViewById(R.id.subBtn)
+        mulBtn = findViewById(R.id.mulBtn)
+        divBtn = findViewById(R.id.divBtn)
+
+        addBtn.setOnClickListener { calculate("+") }
+        subBtn.setOnClickListener { calculate("-") }
+        mulBtn.setOnClickListener { calculate("*") }
+        divBtn.setOnClickListener { calculate("/") }
+    }
+
+    private fun calculate(op: String) {
+
+        val n1 = num1.text.toString().toDouble()
+        val n2 = num2.text.toString().toDouble()
+
+        val res = when(op) {
+            "+" -> n1 + n2
+            "-" -> n1 - n2
+            "*" -> n1 * n2
+            "/" -> n1 / n2
+            else -> 0.0
+        }
+
+        result.text = "Result = $res"
+    }
+}
